@@ -26,7 +26,7 @@ for(let i =0; i<9; i++) {
 
 const allCells = document.querySelectorAll('.cell')
 
-let previousMark=true;
+let isMarkO=true;
 
 const winningPatterns = [
     // Rows
@@ -42,23 +42,36 @@ const winningPatterns = [
     [[0, 2], [1, 1], [2, 0]],
   ];
 
+const finalBoard = [[],[],[]];
+
 const handleCellClick = (e) => {
-    // console.log('clicked',e);
-    if (previousMark) {
-        e.target.attributes.id.value += '+o'
+    const idValue= parseInt(e.target.attributes.id.value);
+    
+    
+    if (isMarkO) {
+        // e.target.attributes.id.value += '+o'
+        if(finalBoard[0].length === 3 && finalBoard[1].length === 3 && finalBoard[2].length === 3) console.log('hello')
         e.target.classList.value = 'cell circle';
-        previousMark = false
+        isMarkO = false
         board.className = 'board x';   
-        console.log('x--', e.target.attributes.id);
+
+        if (idValue < 3) finalBoard[0][idValue] = '0';
+        if (idValue >= 3 && idValue < 6) finalBoard[1][idValue - 3] = '0';
+        if (idValue >= 6 && idValue < 9) finalBoard[2][idValue - 6] = '0';
+        console.log(finalBoard[0], finalBoard[1], finalBoard[2])
         return;
     }
-    e.target.attributes.id.value += '+x' 
+    // e.target.attributes.id.value += '+x' 
     e.target.classList.value = 'cell x'
-    previousMark = true
+    isMarkO = true
     board.className = 'board circle';
-    console.log('0--', e.target.attributes.id);
-}
+    if (idValue < 3) finalBoard[0][idValue] = 'X';
+    if (idValue >= 3 && idValue < 6) finalBoard[1][idValue - 3] = 'X';
+    if (idValue >= 6 && idValue < 9) finalBoard[2][idValue - 6] = 'X';
 
+    console.log(finalBoard[0], finalBoard[1], finalBoard[2])
+    if(finalBoard[0].length === 3 && finalBoard[1].length === 3 && finalBoard[2].length === 3) console.log('hello')
+}
 
 
 
